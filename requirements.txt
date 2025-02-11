@@ -1,0 +1,10 @@
+Django
+django-allauth==0.52.0
+django-ckeditor==6.5.1
+django-cors-headers==3.13.0
+django-crispy-forms==1.14.0
+django-extensions==3.2.1
+django-import-export==3.0.2
+django-js-asset==2.0.0
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.2.2
