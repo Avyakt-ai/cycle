@@ -8,3 +8,6 @@ django-import-export==3.0.2
 django-js-asset==2.0.0
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
+gunicorn
+psycopg2-binary  # PostgreSQL database adapter for Python
+whitenoise  # Simplified static file serving

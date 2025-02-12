@@ -22,20 +22,17 @@ services:
       - 8000
     depends_on:
       - db
-      - broker
-      - celery_worker
     volumes:
       - staticfiles:/home/app/web/staticfiles
       - mediafiles:/home/app/web/media
       - .:/home/app/web
-
 
   nginx:
     container_name: nginx-cycle
     image: nginx:mainline-alpine
     restart: always
     ports:
-      - "1379:80"
+      - "1729:80"
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - staticfiles:/home/app/web/staticfiles

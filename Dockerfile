@@ -20,6 +20,6 @@ RUN pip install -r requirements.txt
 
 COPY . $APP_HOME
 RUN chown -R app:app $APP_HOME
-
+RUN chmod +x /home/app/web/entrypoint.sh
 
 ENTRYPOINT ["/home/app/web/entrypoint.sh"]
