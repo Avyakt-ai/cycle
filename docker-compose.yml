@@ -27,6 +27,25 @@ services:
       - mediafiles:/home/app/web/media
       - .:/home/app/web
 
+  mosquitto:
+    container_name: mosquitto-cycle
+    image: eclipse-mosquitto:latest
+    restart: always
+    ports:
+      - "1883:1883"  # MQTT default port
+      - "9001:9001"  # WebSocket support (optional)
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    expose:
+      - 1883
+    healthcheck:
+      test: ["CMD", "mosquitto_pub", "-h", "localhost", "-t", "test", "-m", "hello"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   nginx:
     container_name: nginx-cycle
     image: nginx:mainline-alpine
