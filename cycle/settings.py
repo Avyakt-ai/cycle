@@ -26,7 +26,8 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY") or "djangosecretkey"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("SERVER", "False").lower() in ["true", "1"]
 
-ALLOWED_HOSTS = ["*"]  # Allow all hosts for now, adjust as needed
+ALLOWED_HOSTS = ["know-you.me", "www.know-you.me", "localhost", "127.0.0.1"]  # Allow all hosts for now, adjust as needed
+CSRF_TRUSTED_ORIGINS = ["https://know-you.me", "http://know-you.me", "http://localhost"]  # Add your domain here
 
 
 # Application definition
