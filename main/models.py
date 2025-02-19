@@ -1,10 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group, Permission
 
 class User(AbstractUser):
     phone_number = models.CharField(max_length=15, unique=True, null=True, blank=True)
     is_active_rider = models.BooleanField(default=False)
     wallet_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00) 
+
+    groups = models.ManyToManyField(Group, related_name="custom_user_groups", blank=True)
+    user_permissions = models.ManyToManyField(Permission, related_name="custom_user_permissions", blank=True)
 
     def __str__(self):
         return self.username
@@ -20,7 +24,7 @@ class Cycle(models.Model):
     cycle_id = models.CharField(max_length=20, unique=True)
     current_location = models.JSONField(default=dict)
     status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='available')
-    lock = models.OneToOneField('Lock', on_delete=models.CASCADE, null=True, blank=True)
+    lock = models.OneToOneField('Lock', on_delete=models.CASCADE, null=True, blank=True, related_name="cycle_lock")  # Added related_name
     last_rider = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
@@ -29,12 +33,20 @@ class Cycle(models.Model):
 
 class Lock(models.Model):
     lock_id = models.CharField(max_length=20, unique=True)
-    cycle = models.OneToOneField(Cycle, on_delete=models.CASCADE, related_name="lock", null=True, blank=True)
+    cycle = models.OneToOneField(
+        Cycle, 
+        on_delete=models.CASCADE, 
+        related_name="cycle_lock",  # Change related_name to something unique
+        null=True, 
+        blank=True
+    )
     is_locked = models.BooleanField(default=True)
     last_signal = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"Lock {self.lock_id} - {'Locked' if self.is_locked else 'Unlocked'}"
+
+
 
 
 class Ride(models.Model):
