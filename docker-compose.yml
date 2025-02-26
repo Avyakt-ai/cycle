@@ -32,8 +32,8 @@ services:
     image: eclipse-mosquitto:latest
     restart: always
     ports:
-      - "1883:1883"  # MQTT default port
-      - "9001:9001"  # WebSocket support (optional)
+      - "1883:1883" 
+      - "9001:9001" 
     volumes:
       - ./mosquitto/config:/mosquitto/config
       - ./mosquitto/data:/mosquitto/data
@@ -41,10 +41,11 @@ services:
     expose:
       - 1883
     healthcheck:
-      test: ["CMD", "mosquitto_pub", "-h", "localhost", "-t", "test", "-m", "hello"]
+      test: ["CMD", "mosquitto_pub", "-h", "localhost", "-t", "test", "-m", "hello", "-u", "avyakt", "-P", "3.14159265358"]
       interval: 30s
       timeout: 10s
       retries: 3
+
 
   nginx:
     container_name: nginx-cycle
